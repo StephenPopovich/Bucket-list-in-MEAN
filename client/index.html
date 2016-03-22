@@ -1,0 +1,44 @@
+<html ng-app="bucketlists_app">
+<head>
+  <title>Bucket List</title>
+  <!-- require angular -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script>
+      // Let's create our angular module
+    var bucketlists_app = angular.module('bucketlists_app', []);
+    // Now let's create a controller with some hardcoded data!
+    bucketlists_app.controller('BucketlistsController', function($scope) {
+    $scope.bucketlists = [{task: "Swim with Sharks", age: 28, witwho: "Mark"}, {task: "Go to Japan", age: 30, withwho: "Go to Japan"}];
+    $scope.addbucketlist = function() {
+      $scope.bucketlists.push({task: $scope.new_bucketlist.task, age: $scope.new_bucketlist.age, withwho: $scope.new_bucketlist.task});
+      $scope.bucketlist = {};
+    }
+    })
+
+  </script>
+</head>
+<!-- everything in the body is going to use the friends controller (this gives us access to the friends controller $scope) -->
+<body ng-controller="BucketlistsController">
+  <h1>Bucket List</h1>
+  <label for="">Fitler through you Bucket List:</label>
+  <input type="text" ng-model="filter_name" placeholder="filter">
+  {{filter_name}}
+  <ol>
+    <!-- here is where we are going to display friends -->
+    <li ng-repeat="bucketlist in bucketlists | filter: filter_name">
+    <p>I want to {{bucketlist.task}} by age {{bucketlist.age}} with {{bucketlist.withwho}} </p>
+    </li>
+  </ol>
+  <h1>Add a Bucket List Task</h1>
+  <!-- objects and properties nothing scary -->
+  <label for="name"></label>
+  <label for="">What do you want to do?</label>
+  <p><input type="text" ng-model="new_bucketlist.task" placeholder="What do you want to do?" style="width: 300px;" > </p>
+  <label for="">What age do you want to do this by?</label>
+  <p><input type="text" ng-model="new_bucketlist.age" placeholder=" What age do you want to complete this?" style="width: 300px;" > </p>
+  <label for="">With who?</label>
+  <p><input type="text" ng-model="new_bucketlist.witwho" placeholder="With who?" style="width: 300px;" ></p>
+  <!-- addfriend() is a method we are going to make in the angular controller -->
+  <input type="submit" ng-click="addbucketlist()">
+</body>
+</html>
